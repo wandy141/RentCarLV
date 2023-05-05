@@ -173,18 +173,4 @@ class RentaController extends Controller
 
 
 
-    // public function destroyUser($id)
-    // {
-    //     $user = usuario::find($id);
-
-    //     if ($user) {
-    //         $user->delete();
-
-    //        ;
-
-    //     } else {
-
-    //         
-    //     }
-    // }
-
+    

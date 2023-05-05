@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\alquiler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RentaController;
@@ -52,5 +53,10 @@ route::post('/tipoId', [TipoVehiculoController::class,'tipoid']);
 route::post('/tipoAll', [TipoVehiculoController::class,'todoTipo']);
 
 route::post('/nombreUser', [usuarioToken::class,'getNombre']);
+
+route::post('/alquiler', [alquiler::class,'alquiler']);
+route::post('/todoAlquiler', [alquiler::class,'todoAlquiler']);
+
+
 
 
