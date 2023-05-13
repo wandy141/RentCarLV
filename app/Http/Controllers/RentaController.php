@@ -29,46 +29,35 @@ class RentaController extends Controller
     public function login(Request $data)
     {
         $data = (object) $data;
-
+    
         $usuario = $data->usuarioid;
         $contrasena = $data->contrasena;
+        $estado = $data->estado;
         $respuesta = false;
-
         $token = '';
-
-        $consulta  = usuario::where('usuarioid', $usuario)->where('contrasena', $contrasena)->where('estado', 1)->get();
-
-
-        if ($consulta !== null &&  count($consulta) > 0) {
-
-            $sessiones = token::where('usuarioid', $usuario)->get();
-            $session = new token();
-
-            if (count($sessiones) > 0) {
-                $session = $sessiones[0];
+    
+        $consulta = usuario::where('usuarioid', $usuario)
+                           ->where('contrasena', $contrasena)
+                           ->whereIn('estado', [0,1,2])
+                           ->first();
+    
+        if ($consulta) {
+            $estado = $consulta->estado;
+    
+            if ($estado == 0 || $estado == 1 || $estado == 2) {
+                $token = $usuario . '123';
+                $respuesta = true;
+            } else {
+                return response()->json(['mensaje' => 'El estado no cumple con los criterios requeridos.'], 403);
             }
-
-
-            $time = new DateTime();
-            $time->add(new DateInterval('PT' . 10 . 'M'));
-
-            $token = $usuario . '123';
-            $session->token = $token;
-            $session->usuarioid = $usuario;
-            $session->fechavalida =  $time;
-            $session->save();
-
-
-            $respuesta = true;
-        } else {
-            $respuesta = false;
         }
-
+    
         if ($respuesta) {
-            $retorno = (object) array('resultado' => $respuesta, 'token' => $token);
+            $retorno = (object) array('resultado' => $respuesta, 'token' => $token, 'estado' => $estado);
         } else {
-            $retorno = (object) array('resultado' => $respuesta, 'token' => '');
+            $retorno = (object) array('resultado' => $respuesta, 'token' => '', 'estado' => $estado);
         }
+    
         return response()->json($retorno);
     }
 
