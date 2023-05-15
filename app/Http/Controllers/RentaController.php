@@ -20,12 +20,6 @@ class RentaController extends Controller
     }
 
 
-
-
-
-
-
-
     public function login(Request $data)
     {
         $data = (object) $data;

@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RentaController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\TipoVehiculoController;
+use App\Http\Controllers\ClienteController;
+
 use App\Http\Controllers\usuarioToken;
 
 
@@ -55,7 +57,15 @@ route::post('/tipoAll', [TipoVehiculoController::class,'todoTipo']);
 route::post('/nombreUser', [usuarioToken::class,'getNombre']);
 
 route::post('/alquiler', [alquiler::class,'alquiler']);
-route::post('/todoAlquiler', [alquiler::class,'todoAlquiler']);
+route::get('/todoAlquiler', [alquiler::class,'todoAlquiler']);
+route::delete('/eliminarAlquiler/{idalquiler}', [alquiler::class,'destroyAlquiler']);
+
+
+
+route::post('/cliente', [ClienteController::class,'cliente']);
+route::get('/todoCliente', [ClienteController::class,'todoCliente']);
+route::post('/clienteId', [ClienteController::class,'clienteId']);
+
 
 
 
