@@ -47,6 +47,11 @@ route::get('/tipoNormal', [VehiculoController::class,'normal']);
 route::get('/tipoPremium', [VehiculoController::class,'premium']);
 route::get('/tipoCamion', [VehiculoController::class,'camion']);
 
+route::get('/bajoPrecio', [VehiculoController::class,'bajoPrecio']);
+route::get('/medioPrecio', [VehiculoController::class,'medioPrecio']);
+route::get('/mayorPrecio', [VehiculoController::class,'mayorPrecio']);
+
+
 
 
 
@@ -59,6 +64,10 @@ route::post('/nombreUser', [usuarioToken::class,'getNombre']);
 route::post('/alquiler', [alquiler::class,'alquiler']);
 route::get('/todoAlquiler', [alquiler::class,'todoAlquiler']);
 route::delete('/eliminarAlquiler/{idalquiler}', [alquiler::class,'destroyAlquiler']);
+route::get('/casiUno', [alquiler::class,'casiUno']);
+route::get('/casiDo', [alquiler::class,'casiDo']);
+route::get('/casiTre', [alquiler::class,'casiTre']);
+
 
 
 

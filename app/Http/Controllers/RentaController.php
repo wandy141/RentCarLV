@@ -90,7 +90,6 @@ class RentaController extends Controller
         $data = (object) $data;
         $usuario = $data->usuarioid;
 
-        // $consulta = usuario::where('usuarioid',$usuario)->get();
         $consulta = usuario::find($usuario);
 
 
@@ -137,9 +136,6 @@ class RentaController extends Controller
 
     public function destroyUser($usuarioid)
 {
-    // return response()->json($usuarioid);
-    // $data = (object)$usuarioid;
-    // $dato = $data->usuarioid;
 
     $user = usuario::find($usuarioid);
 

@@ -19,16 +19,6 @@ class VehiculoController extends Controller
         $datos = (object) $data->vehiculo;
 
         $obgId = vehiculo::find($datos->idvehiculo);
-
-
-
-        // if ($data->hasFile('imagen')) {
-        //     $imagen = $data->file('imagen');
-    
-        //     $nombreImagen = uniqid() . '.' . $imagen->getClientOriginalExtension();
-    
-        //     $imagen->move(public_path('images'), $nombreImagen);
-        // }
     
         if ($obgId == null){
             $obgId = new vehiculo();
@@ -121,6 +111,25 @@ class VehiculoController extends Controller
         return response()->json($carros);
      }
      
+
+
+     public function bajoPrecio()
+     {
+        $carros = Vehiculo::where('precio','<=',50)->get();
+        return response()->json($carros);
+     }
+
+     public function medioPrecio()
+     {
+        $carros = Vehiculo::where('precio','<',60)->get();
+        return response()->json($carros);
+     }
+
+     public function mayorPrecio()
+     {
+        $carros = Vehiculo::where('precio','>=',60)->get();
+        return response()->json($carros);
+     }
 
 }
 

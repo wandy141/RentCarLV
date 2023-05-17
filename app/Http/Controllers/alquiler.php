@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\alquiler as ModelsAlquiler;
 use App\Models\Vehiculo as vehiculo;
 use Illuminate\Http\Request;
-
+use Carbon\Carbon;
 class alquiler extends Controller
 {
     public function alquiler(Request $data) {
@@ -58,6 +58,33 @@ public function todoAlquiler()
         }         
         return response()->json($resultado); 
         }
+
+        public function casiUno()
+        {
+             
+            $fechaManana = Carbon::now();
+            $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaManana->toDateString())->get();
+        
+            return response()->json($alquiler);
+        }
+   
+        public function casiDo()
+        {
+            $fechaManana = Carbon::now()->addDay();
+            $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaManana->toDateString())->get();
+        
+            return response()->json($alquiler);
+        }
+   
+
+        public function casiTre()
+        {
+            $fechaManana = Carbon::now()->addDay(2);
+            $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaManana->toDateString())->get();
+        
+            return response()->json($alquiler);
+        }
+   
     
 
 
