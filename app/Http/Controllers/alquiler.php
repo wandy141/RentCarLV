@@ -59,6 +59,23 @@ public function todoAlquiler()
         return response()->json($resultado); 
         }
 
+
+        public function vencieron()
+        {
+            $fechaActual = Carbon::now();
+            $alquileres = [];
+        
+            for ($i = 1; $i <= 10; $i++) {
+                $fechaAnterior = $fechaActual->subDay();
+                $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaAnterior->toDateString())->get();
+                $alquileres = array_merge($alquileres, $alquiler->toArray());
+            }
+        
+            return response()->json($alquileres);
+        }
+
+
+
         public function casiUno()
         {
              
