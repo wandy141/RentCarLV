@@ -28,13 +28,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+route::post('/nombreUser', [usuarioToken::class,'getNombre']);
+
 route::post('/login', [RentaController::class,'login']);
 route::post('/users', [RentaController::class,'usuarios']);
 route::post('/users/id', [RentaController::class,'usuarioid']);
 route::post('/storeUser', [RentaController::class,'storeUser']);
 route::post('/tokenExpiration', [RentaController::class,'expira']);
 route::delete('/eliminarUser/{usuarioid}', [RentaController::class,'destroyUser']);
-
 
 route::post('/storeVehiculos', [VehiculoController::class,'storeVehiculo']);
 route::post('/allVehiculo', [VehiculoController::class,'mostrarVehiculo']);
@@ -51,30 +53,25 @@ route::get('/bajoPrecio', [VehiculoController::class,'bajoPrecio']);
 route::get('/medioPrecio', [VehiculoController::class,'medioPrecio']);
 route::get('/mayorPrecio', [VehiculoController::class,'mayorPrecio']);
 
-
-
-
-
 route::post('/tipoVehiculos', [TipoVehiculoController::class,'tipoVehiculo']);
 route::post('/tipoId', [TipoVehiculoController::class,'tipoid']);
 route::post('/tipoAll', [TipoVehiculoController::class,'todoTipo']);
 
-route::post('/nombreUser', [usuarioToken::class,'getNombre']);
-
 route::post('/alquiler', [alquiler::class,'alquiler']);
 route::get('/todoAlquiler', [alquiler::class,'todoAlquiler']);
-route::delete('/eliminarAlquiler/{idalquiler}', [alquiler::class,'destroyAlquiler']);
 route::get('/vencieron', [alquiler::class,'vencieron']);
 route::get('/casiUno', [alquiler::class,'casiUno']);
 route::get('/casiDo', [alquiler::class,'casiDo']);
 route::get('/casiTre', [alquiler::class,'casiTre']);
-
-
-
+route::get('/carrosActivos', [alquiler::class,'carrosActivos']);
+route::get('/bajoPrecioAc', [alquiler::class,'bajoPrecio']);
+route::get('/medioPrecioAc', [alquiler::class,'medioPrecio']);
+route::get('/mayorPrecioAc', [alquiler::class,'mayorPrecio']);
+route::delete('/eliminarAlquiler/{idalquiler}', [alquiler::class,'destroyAlquiler']);
 
 route::post('/cliente', [ClienteController::class,'cliente']);
-route::get('/todoCliente', [ClienteController::class,'todoCliente']);
 route::post('/clienteId', [ClienteController::class,'clienteId']);
+route::get('/todoCliente', [ClienteController::class,'todoCliente']);
 
 
 

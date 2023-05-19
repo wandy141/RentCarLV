@@ -66,14 +66,16 @@ class RentaController extends Controller
 
         if ($objSeccionXid != null) {
             $time = $objSeccionXid->fechavalida;
-
+            $usuario = usuario::find($objSeccionXid->usuarioid);
 
             $fecha_actual = date('Y-m-d H:i:s');
             //return response()->json([$fecha_actual, $time]);
-            if ($fecha_actual > $time) {
+            if ( $fecha_actual > $time) {
                 $expira =  false;
-            } else {
+            } else if ( $usuario->estado == 1 ) {
                 $expira =  true;
+            } else {
+                $expira =  false;
             }
         } else {
             $expira = false;
