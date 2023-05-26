@@ -13,45 +13,78 @@ class VehiculoController extends Controller
         return view('index');
     }
 
-     public function storeVehiculo(Request $datosRec){
+public function Imagen(Request $image)
+{
 
-        $data = (object) $datosRec;
-        $datos = (object) $data->vehiculo;
+if ($image->hasFile('file')) {
+   $file = $image->file('file');
+   $filename = $file->getClientOriginalName();
+   $filename = pathinfo($filename, PATHINFO_FILENAME);
+   $name_File = str_replace(" ","_",$filename);
+   $extension = $file->getClientOriginalExtension();
+   $picture = date('His') . '-' . $name_File . '.' . $extension;
+   $file->move(public_path('../../login/src/assets/'), $picture);
 
-        $obgId = vehiculo::find($datos->idvehiculo);
-    
-        if ($obgId == null){
-            $obgId = new vehiculo();
-            $obgId->idvehiculo = $datos->idvehiculo;
-            $obgId->marca = $datos->marca;
-            $obgId->modelo = $datos->modelo;
-            $obgId->color = $datos->color;
-            $obgId->asiento = $datos->asiento;
-            $obgId->combustible = $datos->combustible;
-            $obgId->tipo = $datos->tipo;
-            $obgId->ano = $datos->ano;
-            $obgId->placa = $datos->placa;
-            $obgId->precio = $datos->precio;
-          //  $obgId->imagen = $nombreImagen->imagen;
-            $obgId->estado = $datos->estado;
 
-        } else{
-            $obgId->marca = $datos->marca;
-            $obgId->modelo = $datos->modelo;
-            $obgId->color = $datos->color;
-            $obgId->asiento = $datos->asiento;
-            $obgId->combustible = $datos->combustible;
-            $obgId->tipo = $datos->tipo;
-            $obgId->ano = $datos->ano;
-            $obgId->placa = $datos->placa;
-            $obgId->precio = $datos->precio;
-           // $obgId->imagen = $nombreImagen->imagen;
-            $obgId->estado = $datos->estado;
-        }
-    
-        $resultado = $obgId->save();
-            return response()->json($resultado);
-        }
+   $vehiculo = new Vehiculo();
+   $vehiculo->imagen = $picture;
+   $vehiculo->save();
+
+
+return response()->json(["mesaje" => "Imagen Guardada"]);
+}else{
+
+return response()->json(["mesaje" => "No se pudo"]);
+
+}
+
+
+
+}
+
+public function storeVehiculo(Request $datosRec)
+{
+    // Guardar la imagen en la carpeta de assets
+    if ($datosRec->hasFile('file')) {
+        $file = $datosRec->file('file');
+        $filename = $file->getClientOriginalName();
+        $filename = pathinfo($filename, PATHINFO_FILENAME);
+        $name_File = str_replace(" ", "_", $filename);
+        $extension = $file->getClientOriginalExtension();
+        $picture = date('His') . '-' . $name_File . '.' . $extension;
+        $file->move(public_path('../../login/src/assets/'), $picture);
+    } else {
+        return response()->json(["mensaje" => "No se pudo guardar la imagen"]);
+    }
+
+    // Guardar los datos del vehículo en la base de datos
+    $data = (object) $datosRec;
+    $datos = (object) $data->vehiculo;
+
+    $obgId = Vehiculo::find($datos->idvehiculo);
+
+    if ($obgId == null) {
+        $obgId = new Vehiculo();
+        $obgId->idvehiculo = $datos->idvehiculo;
+    }
+
+    $obgId->marca = $datos->marca;
+    $obgId->modelo = $datos->modelo;
+    $obgId->color = $datos->color;
+    $obgId->asiento = $datos->asiento;
+    $obgId->combustible = $datos->combustible;
+    $obgId->tipo = $datos->tipo;
+    $obgId->ano = $datos->ano;
+    $obgId->placa = $datos->placa;
+    $obgId->precio = $datos->precio;
+    $obgId->imagen = $picture; // Asignar la ruta de la imagen guardada
+
+    $resultado = $obgId->save();
+
+    return response()->json($resultado);
+}
+
+
 
 //te muestra todos los campo de un usuario en especifico
         public function idVehiculo(Request $datoi)
@@ -110,18 +143,18 @@ class VehiculoController extends Controller
         $carros = Vehiculo::where('tipo', 6)->get();
         return response()->json($carros);
      }
-     
+
 
 
      public function bajoPrecio()
      {
-        $carros = Vehiculo::where('precio','<=',50)->get();
+        $carros = Vehiculo::where('precio','<',50)->get();
         return response()->json($carros);
      }
 
      public function medioPrecio()
      {
-        $carros = Vehiculo::where('precio','<',60)->get();
+        $carros = Vehiculo::where('precio','<=',60)->where('precio','>=',50)->get();
         return response()->json($carros);
      }
 

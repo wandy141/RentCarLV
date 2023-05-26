@@ -7,6 +7,8 @@ use App\Http\Controllers\RentaController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\TipoVehiculoController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\EntregaController;
+
 
 use App\Http\Controllers\usuarioToken;
 
@@ -67,6 +69,7 @@ route::get('/carrosActivos', [alquiler::class,'carrosActivos']);
 route::get('/bajoPrecioAc', [alquiler::class,'bajoPrecio']);
 route::get('/medioPrecioAc', [alquiler::class,'medioPrecio']);
 route::get('/mayorPrecioAc', [alquiler::class,'mayorPrecio']);
+route::get('/AlquilerActivo', [alquiler::class,'AlquilerActivo']);
 route::delete('/eliminarAlquiler/{idalquiler}', [alquiler::class,'destroyAlquiler']);
 
 route::post('/cliente', [ClienteController::class,'cliente']);
@@ -74,6 +77,7 @@ route::post('/clienteId', [ClienteController::class,'clienteId']);
 route::get('/todoCliente', [ClienteController::class,'todoCliente']);
 
 
+route::post('/Imagen', [VehiculoController::class,'Imagen']);
 
-
+route::post('/InsertEntrega', [EntregaController::class,'entregaInsert']);
 

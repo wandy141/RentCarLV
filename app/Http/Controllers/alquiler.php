@@ -56,6 +56,14 @@ class alquiler extends Controller
         return response()->json($consulta);
     }
 
+
+    public function AlquilerActivo()
+    {
+        $consulta = ModelsAlquiler::where('estado',1)->where('entregado',0)->get();
+        return response()->json($consulta);
+    }
+
+
     public function destroyAlquiler($idalquiler)
     {
         $alquiler = ModelsAlquiler::find($idalquiler);
@@ -76,7 +84,7 @@ class alquiler extends Controller
         $fechaActual = Carbon::now();
         $alquileres = [];
 
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 40; $i++) {
             $fechaAnterior = $fechaActual->subDay();
             $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaAnterior->toDateString())->get();
             $alquileres = array_merge($alquileres, $alquiler->toArray());
@@ -100,7 +108,7 @@ class alquiler extends Controller
     public function casiUno()
     {
         $fechaManana = Carbon::now();
-        $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaManana->toDateString())->get();
+        $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaManana->toDateString())->where('estado',1)->get();
 
         return response()->json($alquiler);
     }
@@ -108,7 +116,7 @@ class alquiler extends Controller
     public function casiDo()
     {
         $fechaManana = Carbon::now()->addDay();
-        $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaManana->toDateString())->get();
+        $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaManana->toDateString())->where('estado',1)->get();
 
         return response()->json($alquiler);
     }
@@ -117,26 +125,26 @@ class alquiler extends Controller
     public function casiTre()
     {
         $fechaManana = Carbon::now()->addDay(2);
-        $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaManana->toDateString())->get();
+        $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaManana->toDateString())->where('estado',1)->get();
 
         return response()->json($alquiler);
     }
 
     public function bajoPrecio()
     {
-        $carros = Vehiculo::where('precio', '<=', 50)->where('estado', 1)->get();
+        $carros = Vehiculo::where('precio', '<', 50)->where('estado', 1)->get();
         return response()->json($carros);
     }
 
     public function medioPrecio()
     {
-        $carros = Vehiculo::where('precio', '<', 60)->where('estado', 1)->get();
+        $carros = Vehiculo::where('precio', '<=', 60)->where('precio', '>=',50)->where('estado', 1)->get();
         return response()->json($carros);
     }
 
     public function mayorPrecio()
     {
-        $carros = Vehiculo::where('precio', '>=', 60)->where('estado', 1)->get();
+        $carros = Vehiculo::where('precio', '>', 60)->where('estado', 1)->get();
         return response()->json($carros);
     }
 }
