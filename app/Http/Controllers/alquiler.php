@@ -39,6 +39,7 @@ class alquiler extends Controller
         $objAlquiler->nombrecliente = $alquiler->nombrecliente;
         $objAlquiler->fecha = $alquiler->fecha;
         $objAlquiler->idvehiculo = $alquiler->idvehiculo;
+        $objAlquiler->seguro = $alquiler->seguro;
         $objAlquiler->precio = $alquiler->precio;
         $objAlquiler->dias = $alquiler->dias;
         $objAlquiler->fechaini = $alquiler->fechaini;

@@ -27,7 +27,7 @@ class EntregaController extends Controller
         $objEntrega->nota = $entrega->nota;
 
         $idAlquilerIn = $entrega->idalquiler;
-        alquiler::where('idalquiler', $idAlquilerIn)->update(['estado' => 1]);
+        alquiler::where('idalquiler', $idAlquilerIn)->update(['entregado' => 1]);
         $resultado = $objEntrega->save();
         return response()->json($resultado);
     }
