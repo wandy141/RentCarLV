@@ -15,6 +15,8 @@ class VehiculoController extends Controller
 
 public function Imagen(Request $image)
 {
+    // return response()->json($image);
+$id = $image['id'];
 
 if ($image->hasFile('file')) {
    $file = $image->file('file');
@@ -26,12 +28,12 @@ if ($image->hasFile('file')) {
    $file->move(public_path('../../login/src/assets/'), $picture);
 
 
-   $vehiculo = new Vehiculo();
+   $vehiculo = Vehiculo::find($id);
    $vehiculo->imagen = $picture;
    $vehiculo->save();
 
 
-return response()->json(["mesaje" => "Imagen Guardada"]);
+return response()->json(["mesaje" => "Imagen Guardada" ]);
 }else{
 
 return response()->json(["mesaje" => "No se pudo"]);
@@ -44,18 +46,20 @@ return response()->json(["mesaje" => "No se pudo"]);
 
 public function storeVehiculo(Request $datosRec)
 {
+    // return response()->json($datosRec);
+
     // Guardar la imagen en la carpeta de assets
-    if ($datosRec->hasFile('file')) {
-        $file = $datosRec->file('file');
-        $filename = $file->getClientOriginalName();
-        $filename = pathinfo($filename, PATHINFO_FILENAME);
-        $name_File = str_replace(" ", "_", $filename);
-        $extension = $file->getClientOriginalExtension();
-        $picture = date('His') . '-' . $name_File . '.' . $extension;
-        $file->move(public_path('../../login/src/assets/'), $picture);
-    } else {
-        return response()->json(["mensaje" => "No se pudo guardar la imagen"]);
-    }
+    // if ($datosRec->hasFile('file')) {
+    //     $file = $datosRec->file('file');
+    //     $filename = $file->getClientOriginalName();
+    //     $filename = pathinfo($filename, PATHINFO_FILENAME);
+    //     $name_File = str_replace(" ", "_", $filename);
+    //     $extension = $file->getClientOriginalExtension();
+    //     $picture = date('His') . '-' . $name_File . '.' . $extension;
+    //     $file->move(public_path('../../login/src/assets/'), $picture);
+    // } else {
+    //     return response()->json(["mensaje" => "No se pudo guardar la imagen"]);
+    // }
 
     // Guardar los datos del vehículo en la base de datos
     $data = (object) $datosRec;
@@ -77,11 +81,15 @@ public function storeVehiculo(Request $datosRec)
     $obgId->ano = $datos->ano;
     $obgId->placa = $datos->placa;
     $obgId->precio = $datos->precio;
-    $obgId->imagen = $picture; // Asignar la ruta de la imagen guardada
+    // $obgId->imagen = $picture; // Asignar la ruta de la imagen guardada
 
     $resultado = $obgId->save();
 
-    return response()->json($resultado);
+    $retorno = (object) [];
+    $retorno->resultado = $resultado;
+    $retorno->id = $obgId->idvehiculo;
+
+    return response()->json($retorno);
 }
 
 
