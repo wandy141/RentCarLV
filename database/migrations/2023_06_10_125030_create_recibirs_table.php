@@ -15,6 +15,13 @@ return new class extends Migration
     {
         Schema::create('recibirs', function (Blueprint $table) {
             $table->id();
+            $table->string('NombreCli');
+            $table->integer('NoReserva');
+            $table->dateTime('FechHoraDev');
+            $table->decimal('KMactual');
+            $table->text('EstadoVeh');
+            $table->string('NCombustible');
+            $table->text('Comentarios');
             $table->timestamps();
         });
     }
