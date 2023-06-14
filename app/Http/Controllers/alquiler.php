@@ -60,7 +60,7 @@ class alquiler extends Controller
 
     public function AlquilerActivo()
     {
-        $consulta = ModelsAlquiler::where('estado',1)->where('entregado',0)->get();
+        $consulta = ModelsAlquiler::where('estado', 1)->where('entregado', 0)->get();
         return response()->json($consulta);
     }
 
@@ -100,7 +100,7 @@ class alquiler extends Controller
 
     public function carrosActivos()
     {
-        $consulta = vehiculo::where('estado', 1)->get();
+        $consulta = vehiculo::where('estado', 1)->where('mantenimiento', 0)->get();
         return response()->json($consulta);
     }
 
@@ -109,7 +109,7 @@ class alquiler extends Controller
     public function casiUno()
     {
         $fechaManana = Carbon::now();
-        $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaManana->toDateString())->where('estado',1)->get();
+        $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaManana->toDateString())->where('estado', 1)->get();
 
         return response()->json($alquiler);
     }
@@ -117,7 +117,7 @@ class alquiler extends Controller
     public function casiDo()
     {
         $fechaManana = Carbon::now()->addDay();
-        $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaManana->toDateString())->where('estado',1)->get();
+        $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaManana->toDateString())->where('estado', 1)->get();
 
         return response()->json($alquiler);
     }
@@ -126,7 +126,7 @@ class alquiler extends Controller
     public function casiTre()
     {
         $fechaManana = Carbon::now()->addDay(2);
-        $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaManana->toDateString())->where('estado',1)->get();
+        $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaManana->toDateString())->where('estado', 1)->get();
 
         return response()->json($alquiler);
     }
@@ -139,7 +139,7 @@ class alquiler extends Controller
 
     public function medioPrecio()
     {
-        $carros = Vehiculo::where('precio', '<=', 60)->where('precio', '>=',50)->where('estado', 1)->get();
+        $carros = Vehiculo::where('precio', '<=', 60)->where('precio', '>=', 50)->where('estado', 1)->get();
         return response()->json($carros);
     }
 
