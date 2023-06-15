@@ -53,7 +53,7 @@ class alquiler extends Controller
 
     public function todoAlquiler()
     {
-        $consulta = ModelsAlquiler::all();
+        $consulta = ModelsAlquiler::where('estado', 1)->get();
         return response()->json($consulta);
     }
 
@@ -87,7 +87,7 @@ class alquiler extends Controller
 
         for ($i = 1; $i <= 40; $i++) {
             $fechaAnterior = $fechaActual->subDay();
-            $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaAnterior->toDateString())->get();
+            $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaAnterior->toDateString())->where('entregado',1)->get();
             $alquileres = array_merge($alquileres, $alquiler->toArray());
         }
 
@@ -109,7 +109,7 @@ class alquiler extends Controller
     public function casiUno()
     {
         $fechaManana = Carbon::now();
-        $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaManana->toDateString())->where('estado', 1)->get();
+        $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaManana->toDateString())->where('estado', 1)->where('entregado',1)->get();
 
         return response()->json($alquiler);
     }
@@ -117,19 +117,22 @@ class alquiler extends Controller
     public function casiDo()
     {
         $fechaManana = Carbon::now()->addDay();
-        $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaManana->toDateString())->where('estado', 1)->get();
+        $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaManana->toDateString())->where('estado', 1)->where('entregado',1)->get();
 
         return response()->json($alquiler);
     }
 
 
     public function casiTre()
-    {
-        $fechaManana = Carbon::now()->addDay(2);
-        $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaManana->toDateString())->where('estado', 1)->get();
+{
+    $fechaManana = Carbon::now()->addDays(2); 
+    $alquiler = ModelsAlquiler::whereDate('fechafin', $fechaManana->toDateString())
+        ->where('estado', 1)
+        ->where('entregado', 1)
+        ->get();
 
-        return response()->json($alquiler);
-    }
+    return response()->json($alquiler);
+}
 
     public function bajoPrecio()
     {

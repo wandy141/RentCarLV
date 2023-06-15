@@ -25,7 +25,7 @@ if ($image->hasFile('file')) {
    $name_File = str_replace(" ","_",$filename);
    $extension = $file->getClientOriginalExtension();
    $picture = date('His') . '-' . $name_File . '.' . $extension;
-   $file->move(public_path('../../login/src/assets/'), $picture);
+   $file->move(public_path('../../RentCarAG/src/assets/'), $picture);
 
 
    $vehiculo = Vehiculo::find($id);
@@ -105,9 +105,20 @@ public function storeVehiculo(Request $datosRec)
         }
 
 //mustra todos los vehiculos
+public function vehiculoInactivo()
+{
+    $objAll = vehiculo::where('estado', 0)->get();
+    return response()->json($objAll);
+}
         public function mostrarVehiculo()
         {
-            $objAll = vehiculo::all();
+            $objAll = vehiculo::where('estado', 1)->get();
+            return response()->json($objAll);
+        }
+
+        public function vehiculoMantenimiento()
+        {
+            $objAll = vehiculo::where('estado', 2)->get();
             return response()->json($objAll);
         }
 
