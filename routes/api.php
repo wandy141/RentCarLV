@@ -93,3 +93,4 @@ route::get('/todoMantenimiento', [MantenimientoController::class, 'todoMantenimi
 route::post('/insertarMantenimiento', [MantenimientoController::class, 'insertarMantenimiento']);
 
 route::post('/ActivarCarro', [MantenimientoController::class, 'ActivarCarro']);
+route::post('/buscarAutosDisponibles', [VehiculoController::class, 'buscarAutosDisponibles']);

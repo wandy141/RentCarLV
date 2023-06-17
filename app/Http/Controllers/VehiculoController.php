@@ -183,8 +183,24 @@ public function vehiculoInactivo()
         return response()->json($carros);
      }
 
-}
 
+     public function buscarAutosDisponibles(Request $request)
+     {
+      $fechaini = $request->fechaini;
+      $fechafin = $request->fechafin;
+      
+      $vehiculosDisponibles = Vehiculo::whereNotIn('idvehiculo', function ($query) use ($fechaini, $fechafin) {
+          $query->select('idvehiculo')
+              ->from('alquiler')
+              ->whereBetween('fechaini', [$fechaini, $fechafin])
+              ->orWhereBetween('fechafin', [$fechaini, $fechafin]);
+      })->get();
+     
+         return response()->json($vehiculosDisponibles);
+     
+
+}
+}
 
 
 
