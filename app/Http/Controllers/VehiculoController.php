@@ -165,6 +165,111 @@ public function vehiculoInactivo()
 
 
 
+     public function economicoWeb(Request $request)
+     {
+         $fechaini = $request->fechaini;
+         $fechafin = $request->fechafin;
+     
+         $vehiculosDisponibles = Vehiculo::where('tipo', 1)->where('estado',1)
+             ->whereNotIn('idvehiculo', function ($query) use ($fechaini, $fechafin) {
+                 $query->select('idvehiculo')
+                     ->from('alquiler')->where('estado', 1)
+                     ->whereBetween('fechaini', [$fechaini, $fechafin])
+                     ->orWhereBetween('fechafin', [$fechaini, $fechafin]);
+             })->get();
+     
+         return response()->json($vehiculosDisponibles);
+     }
+
+     public function compactoWeb(Request $request)
+     {
+         $fechaini = $request->fechaini;
+         $fechafin = $request->fechafin;
+     
+         $vehiculosDisponibles = Vehiculo::where('tipo', 2)->where('estado',1)
+             ->whereNotIn('idvehiculo', function ($query) use ($fechaini, $fechafin) {
+                 $query->select('idvehiculo')
+                     ->from('alquiler')->where('estado', 1)
+                     ->whereBetween('fechaini', [$fechaini, $fechafin])
+                     ->orWhereBetween('fechafin', [$fechaini, $fechafin]);
+             })->get();
+     
+         return response()->json($vehiculosDisponibles);
+     }
+
+     public function lujoWeb(Request $request)
+     {
+         $fechaini = $request->fechaini;
+         $fechafin = $request->fechafin;
+     
+         $vehiculosDisponibles = Vehiculo::where('tipo', 3)->where('estado',1)
+             ->whereNotIn('idvehiculo', function ($query) use ($fechaini, $fechafin) {
+                 $query->select('idvehiculo')
+                     ->from('alquiler')->where('estado', 1)
+                     ->whereBetween('fechaini', [$fechaini, $fechafin])
+                     ->orWhereBetween('fechafin', [$fechaini, $fechafin]);
+             })->get();
+     
+         return response()->json($vehiculosDisponibles);
+     }
+
+
+     public function premiumWeb(Request $request)
+     {
+         $fechaini = $request->fechaini;
+         $fechafin = $request->fechafin;
+     
+         $vehiculosDisponibles = Vehiculo::where('tipo', 4)->where('estado',1)
+             ->whereNotIn('idvehiculo', function ($query) use ($fechaini, $fechafin) {
+                 $query->select('idvehiculo')
+                     ->from('alquiler')->where('estado', 1)
+                     ->whereBetween('fechaini', [$fechaini, $fechafin])
+                     ->orWhereBetween('fechafin', [$fechaini, $fechafin]);
+             })->get();
+     
+         return response()->json($vehiculosDisponibles);
+     }
+
+
+     public function normalWeb(Request $request)
+     {
+         $fechaini = $request->fechaini;
+         $fechafin = $request->fechafin;
+     
+         $vehiculosDisponibles = Vehiculo::where('tipo', 5)->where('estado',1)
+             ->whereNotIn('idvehiculo', function ($query) use ($fechaini, $fechafin) {
+                 $query->select('idvehiculo')
+                     ->from('alquiler')->where('estado', 1)
+                     ->whereBetween('fechaini', [$fechaini, $fechafin])
+                     ->orWhereBetween('fechafin', [$fechaini, $fechafin]);
+             })->get();
+     
+         return response()->json($vehiculosDisponibles);
+     }
+
+
+     public function camionWeb(Request $request)
+     {
+         $fechaini = $request->fechaini;
+         $fechafin = $request->fechafin;
+     
+         $vehiculosDisponibles = Vehiculo::where('tipo', 6)->where('estado',1)
+             ->whereNotIn('idvehiculo', function ($query) use ($fechaini, $fechafin) {
+                 $query->select('idvehiculo')
+                     ->from('alquiler')->where('estado', 1)
+                     ->whereBetween('fechaini', [$fechaini, $fechafin])
+                     ->orWhereBetween('fechafin', [$fechaini, $fechafin]);
+             })->get();
+     
+         return response()->json($vehiculosDisponibles);
+     }
+
+
+
+
+
+
+
      public function bajoPrecio()
      {
         $carros = Vehiculo::where('precio','<',50)->get();
@@ -189,9 +294,9 @@ public function vehiculoInactivo()
       $fechaini = $request->fechaini;
       $fechafin = $request->fechafin;
       
-      $vehiculosDisponibles = Vehiculo::whereNotIn('idvehiculo', function ($query) use ($fechaini, $fechafin) {
+      $vehiculosDisponibles = Vehiculo::where('estado', 1)->whereNotIn('idvehiculo', function ($query) use ($fechaini, $fechafin) {
           $query->select('idvehiculo')
-              ->from('alquiler')
+              ->from('alquiler')->where('estado',1)
               ->whereBetween('fechaini', [$fechaini, $fechafin])
               ->orWhereBetween('fechafin', [$fechaini, $fechafin]);
       })->get();

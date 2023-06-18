@@ -94,3 +94,10 @@ route::post('/insertarMantenimiento', [MantenimientoController::class, 'insertar
 
 route::post('/ActivarCarro', [MantenimientoController::class, 'ActivarCarro']);
 route::post('/buscarAutosDisponibles', [VehiculoController::class, 'buscarAutosDisponibles']);
+route::post('/economicoWeb', [VehiculoController::class, 'economicoWeb']);
+route::post('/compactoWeb', [VehiculoController::class, 'compactoWeb']);
+route::post('/premiumWeb', [VehiculoController::class, 'premiumWeb']);
+route::post('/lujoWeb', [VehiculoController::class, 'lujoWeb']);
+route::post('/normalWeb', [VehiculoController::class, 'normalWeb']);
+route::post('/camionWeb', [VehiculoController::class, 'camionWeb']);
+

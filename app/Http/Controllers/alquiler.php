@@ -47,7 +47,6 @@ class alquiler extends Controller
         $objAlquiler->fechaini = $alquiler->fechaini;
         $objAlquiler->fechafin = $alquiler->fechafin;
         $objAlquiler->total = $alquiler->total;
-        $objAlquiler->estado = $alquiler->estado;
         $resultado = $objAlquiler->save();
             
         return response()->json($resultado);
