@@ -31,19 +31,39 @@ class RentaController extends Controller
         $token = '';
     
         $consulta = usuario::where('usuarioid', $usuario)
-                           ->where('contrasena', $contrasena)
-                           ->whereIn('estado', [0,1,2])
-                           ->first();
+            ->where('contrasena', $contrasena)
+            ->whereIn('estado', [0, 1, 2])
+            ->first();
     
-        if ($consulta) {
+        if ($consulta !== null && $consulta->count() > 0) {
             $estado = $consulta->estado;
     
-            if ($estado == 0 || $estado == 1 || $estado == 2) {
+            if ($estado == 1) {
+                $sessiones = token::where('usuarioid', $usuario)->get();
+    
+                if (count($sessiones) > 0) {
+                    $session = $sessiones[0];
+                } else {
+                    $session = new token();
+                }
+    
+                $time = new DateTime();
+                $time->add(new DateInterval('PT' . 10 . 'M')); // agregar 10 min a la hora actual
+    
                 $token = $usuario . '123';
+                $session->token = $token;
+                $session->usuarioid = $usuario;
+                $session->fechavalida = $time;
+    
+                $session->save();
+    
                 $respuesta = true;
             } else {
-                return response()->json(['mensaje' => 'El estado no cumple con los criterios requeridos.'], 403);
+                $respuesta = true;
             }
+        } else {
+            $respuesta = false;
+            
         }
     
         if ($respuesta) {
@@ -54,6 +74,8 @@ class RentaController extends Controller
     
         return response()->json($retorno);
     }
+    
+
 
 
     public function expira(Request $datai)
@@ -70,9 +92,9 @@ class RentaController extends Controller
 
             $fecha_actual = date('Y-m-d H:i:s');
             //return response()->json([$fecha_actual, $time]);
-            if ( $fecha_actual > $time) {
+            if ($fecha_actual > $time) {
                 $expira =  false;
-            } else if ( $usuario->estado == 1 ) {
+            } else if ($usuario->estado == 1) {
                 $expira =  true;
             } else {
                 $expira =  false;
@@ -137,21 +159,16 @@ class RentaController extends Controller
 
 
     public function destroyUser($usuarioid)
-{
+    {
 
-    $user = usuario::find($usuarioid);
+        $user = usuario::find($usuarioid);
 
-    if (!$user) {
-        $resultado = false;
-    } else {
-       $user->delete();
-       $resultado = true;
-    }         
-    return response()->json($resultado); 
+        if (!$user) {
+            $resultado = false;
+        } else {
+            $user->delete();
+            $resultado = true;
+        }
+        return response()->json($resultado);
     }
-
 }
-
-
-
-    

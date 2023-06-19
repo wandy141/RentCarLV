@@ -6,6 +6,7 @@ use App\Models\recibir;
 use App\Http\Controllers\Controller;
 use App\Models\alquiler;
 use App\Models\entrega;
+use App\Models\Vehiculo;
 use Illuminate\Http\Request;
 
 class RecibirController extends Controller
@@ -27,11 +28,32 @@ class RecibirController extends Controller
         $objRecibir->FechHoraDev = $recibir->FechHoraDev;
         $objRecibir->Comentarios = $recibir->Comentarios;
 
-        // $idAlquilerIn = $recibir->idalquiler;
-        // alquiler::where('idalquiler', $idAlquilerIn)->update(['entregado' => 1]);
+        $idAlquilerIn = $recibir->id_alquiler;
+        $alquiler = Alquiler::where('idalquiler', $idAlquilerIn)->first();
+        
+        if ($alquiler) {
+            $idCarro = $alquiler->idcarro;
+            Vehiculo::where('idcarro', $idCarro)->update(['estado' => 2]);
+        }
+        
+        $alquiler->update(['estado' => 2, 'recibido' => 1]);
+        
+        $alquiler = alquiler::find($idAlquilerIn);
+    
+    if ($alquiler) {
+        $idVehiculo = $alquiler->idvehiculo;
+        $vehiculo = Vehiculo::find($idVehiculo);
+        
+        if ($vehiculo) {
+            $vehiculo->estado = 2;
+            $vehiculo->save();
+        }
+    }
+       
         $resultado = $objRecibir->save();
         return response()->json($resultado);
     }
+
 
 
     function todoRecibir()

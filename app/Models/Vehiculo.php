@@ -12,6 +12,10 @@ class Vehiculo extends Model
     protected $primaryKey = 'idvehiculo';
     public $timestamps = false;
 
+    public function alquileres()
+    {
+        return $this->hasMany(alquiler::class);
+    }
 }
 
 ?>

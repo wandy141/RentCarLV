@@ -42,7 +42,7 @@ route::post('/tokenExpiration', [RentaController::class, 'expira']);
 route::delete('/eliminarUser/{usuarioid}', [RentaController::class, 'destroyUser']);
 
 route::post('/storeVehiculos', [VehiculoController::class, 'storeVehiculo']);
-route::post('/allVehiculo', [VehiculoController::class, 'mostrarVehiculo']);
+route::get('/allVehiculo', [VehiculoController::class, 'mostrarVehiculo']);
 route::post('/idVehiculo', [VehiculoController::class, 'idVehiculo']);
 
 route::get('/tipoEconomico', [VehiculoController::class, 'economico']);
@@ -51,6 +51,9 @@ route::get('/tipoCompacto', [VehiculoController::class, 'compacto']);
 route::get('/tipoNormal', [VehiculoController::class, 'normal']);
 route::get('/tipoPremium', [VehiculoController::class, 'premium']);
 route::get('/tipoCamion', [VehiculoController::class, 'camion']);
+route::get('/vehiculoInactivo', [VehiculoController::class, 'vehiculoInactivo']);
+route::get('/vehiculoMantenimiento', [VehiculoController::class, 'vehiculoMantenimiento']);
+
 
 route::get('/bajoPrecio', [VehiculoController::class, 'bajoPrecio']);
 route::get('/medioPrecio', [VehiculoController::class, 'medioPrecio']);
@@ -92,6 +95,15 @@ route::post('/insertarMantenimiento', [MantenimientoController::class, 'insertar
 
 route::post('/ActivarCarro', [MantenimientoController::class, 'ActivarCarro']);
 
+
 route::post('/insertarRegistro', [RegistrarseController::class, 'InsertarRegistro']);
 
 Route::post('/verificarUsuarioExistente', [RegistrarseController::class, 'verificarUsuarioExistente']);
+route::post('/buscarAutosDisponibles', [VehiculoController::class, 'buscarAutosDisponibles']);
+route::post('/economicoWeb', [VehiculoController::class, 'economicoWeb']);
+route::post('/compactoWeb', [VehiculoController::class, 'compactoWeb']);
+route::post('/premiumWeb', [VehiculoController::class, 'premiumWeb']);
+route::post('/lujoWeb', [VehiculoController::class, 'lujoWeb']);
+route::post('/normalWeb', [VehiculoController::class, 'normalWeb']);
+route::post('/camionWeb', [VehiculoController::class, 'camionWeb']);
+

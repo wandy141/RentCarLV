@@ -22,9 +22,19 @@ class ClienteController extends Controller
         $objCliente->nombre = $cliente->nombre;
         $objCliente->correo = $cliente->correo;
         $objCliente->cedula = $cliente->cedula;
+        $objCliente->telefono = $cliente->telefono;
+        $objCliente->direccion = $cliente->direccion;
+        $objCliente->nacionalidad = $cliente->nacionalidad;
         
         $resultado = $objCliente->save();
-        return response()->json($resultado);
+        if($resultado){
+            $idcliente = $objCliente->idcliente;
+            $retorno = (object) array('resultado' => $resultado, 'idcliente' => $idcliente);
+        }else{
+            $retorno = (object) array('resultado' => $resultado, 'token' => '');
+
+        }
+        return response()->json($retorno);
     }
 
 
