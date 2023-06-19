@@ -10,6 +10,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EntregaController;
 use App\Http\Controllers\MantenimientoController;
 use App\Http\Controllers\RecibirController;
+use App\Http\Controllers\RegistrarseController;
 use App\Http\Controllers\usuarioToken;
 
 
@@ -93,6 +94,11 @@ route::get('/todoMantenimiento', [MantenimientoController::class, 'todoMantenimi
 route::post('/insertarMantenimiento', [MantenimientoController::class, 'insertarMantenimiento']);
 
 route::post('/ActivarCarro', [MantenimientoController::class, 'ActivarCarro']);
+
+
+route::post('/insertarRegistro', [RegistrarseController::class, 'InsertarRegistro']);
+
+Route::post('/verificarUsuarioExistente', [RegistrarseController::class, 'verificarUsuarioExistente']);
 route::post('/buscarAutosDisponibles', [VehiculoController::class, 'buscarAutosDisponibles']);
 route::post('/economicoWeb', [VehiculoController::class, 'economicoWeb']);
 route::post('/compactoWeb', [VehiculoController::class, 'compactoWeb']);
