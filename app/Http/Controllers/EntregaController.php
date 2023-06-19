@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 
 class EntregaController extends Controller
 {
-    public function entregaInsert(Request $data) {
+    public function entregaInsert(Request $data)
+    {
         $datos = (object) $data;
         $entrega = (object) $datos->entrega;
 
@@ -25,12 +26,11 @@ class EntregaController extends Controller
         $objEntrega->cedula_persona = $entrega->cedula_persona;
         $objEntrega->kilometraje = $entrega->kilometraje;
         $objEntrega->nota = $entrega->nota;
+        $objEntrega->idvehiculo = $entrega->idvehiculo;
 
         $idAlquilerIn = $entrega->idalquiler;
         alquiler::where('idalquiler', $idAlquilerIn)->update(['entregado' => 1]);
         $resultado = $objEntrega->save();
         return response()->json($resultado);
     }
-
-
 }

@@ -9,6 +9,6 @@ class alquiler extends Model
 {
     use HasFactory;
     protected $table = 'alquiler';
-    protected $primaryKey = 'idalquiler' ;
+    protected $primaryKey = 'idalquiler';
     public $timestamps = false;
 }
