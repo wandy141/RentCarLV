@@ -25,13 +25,12 @@ class MantenimientoController extends Controller
             $objMantenimiento = new mantenimiento();
         }
         $objMantenimiento->idmantenimiento = $mantenimiento->idmantenimiento;
-        $objMantenimiento->id_recibir = $mantenimiento->id_recibir;
         $objMantenimiento->id_vehiculo = $mantenimiento->id_vehiculo;
         $objMantenimiento->costo_extra = $mantenimiento->costo_extra;
         $objMantenimiento->comentario = $mantenimiento->comentario;
 
-        // $idAlquilerIn = $recibir->idalquiler;
-        // alquiler::where('idalquiler', $idAlquilerIn)->update(['entregado' => 1]);
+        $idAlquilerIn = $mantenimiento->id_vehiculo;
+        ModelsVehiculo::where('idvehiculo', $idAlquilerIn)->update(['estado' => 1]);
         $resultado = $objMantenimiento->save();
         return response()->json($resultado);
     }

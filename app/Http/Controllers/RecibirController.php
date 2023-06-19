@@ -22,38 +22,23 @@ class RecibirController extends Controller
             $objRecibir = new recibir();
         }
         $objRecibir->idrecibir = $recibir->idrecibir;
-        $objRecibir->id_cliente = $recibir->id_cliente;
+        $objRecibir->id_entrega = $recibir->id_cliente;
         $objRecibir->id_alquiler = $recibir->id_alquiler;
         $objRecibir->NombreCli = $recibir->NombreCli;
         $objRecibir->FechHoraDev = $recibir->FechHoraDev;
         $objRecibir->Comentarios = $recibir->Comentarios;
+        $objRecibir->idvehiculo = $recibir->idvehiculo;
 
         $idAlquilerIn = $recibir->id_alquiler;
-        $alquiler = Alquiler::where('idalquiler', $idAlquilerIn)->first();
-        
-        if ($alquiler) {
-            $idCarro = $alquiler->idcarro;
-            Vehiculo::where('idcarro', $idCarro)->update(['estado' => 2]);
-        }
-        
-        $alquiler->update(['estado' => 2, 'recibido' => 1]);
-        
-        $alquiler = alquiler::find($idAlquilerIn);
-    
-    if ($alquiler) {
-        $idVehiculo = $alquiler->idvehiculo;
-        $vehiculo = Vehiculo::find($idVehiculo);
-        
-        if ($vehiculo) {
-            $vehiculo->estado = 2;
-            $vehiculo->save();
-        }
-    }
-       
+        $identre = $recibir->id_cliente;
+        $idvehi = $recibir->idvehiculo;
+        alquiler::where('idalquiler', $idAlquilerIn)->update(['recibido' => 1, 'estado' => 2]);
+        Entrega::where('identrega', $identre)->update(['estado' => 0]);
+        Vehiculo::where('idvehiculo', $idvehi)->update(['estado' => 2]);
+
         $resultado = $objRecibir->save();
         return response()->json($resultado);
     }
-
 
 
     function todoRecibir()
