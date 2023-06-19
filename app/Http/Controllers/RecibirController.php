@@ -29,7 +29,14 @@ class RecibirController extends Controller
         $objRecibir->Comentarios = $recibir->Comentarios;
 
         $idAlquilerIn = $recibir->id_alquiler;
-        alquiler::where('idalquiler', $idAlquilerIn)->update(['estado' => 2, 'recibido' => 1]);
+        $alquiler = Alquiler::where('idalquiler', $idAlquilerIn)->first();
+        
+        if ($alquiler) {
+            $idCarro = $alquiler->idcarro;
+            Vehiculo::where('idcarro', $idCarro)->update(['estado' => 2]);
+        }
+        
+        $alquiler->update(['estado' => 2, 'recibido' => 1]);
         
         $alquiler = alquiler::find($idAlquilerIn);
     
