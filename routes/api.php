@@ -9,6 +9,7 @@ use App\Http\Controllers\TipoVehiculoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EntregaController;
 use App\Http\Controllers\MantenimientoController;
+use App\Http\Controllers\PagoController;
 use App\Http\Controllers\RecibirController;
 use App\Http\Controllers\RegistrarseController;
 use App\Http\Controllers\usuarioToken;
@@ -107,3 +108,4 @@ route::post('/lujoWeb', [VehiculoController::class, 'lujoWeb']);
 route::post('/normalWeb', [VehiculoController::class, 'normalWeb']);
 route::post('/camionWeb', [VehiculoController::class, 'camionWeb']);
 
+route::post('/insertarPago', [PagoController::class, 'insertarPago']);
